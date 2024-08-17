@@ -90,7 +90,7 @@ end
 UpdateTranslations() -- Call once at start to get initial strings.
 
 -- Re-run UpdateTranslations() whenever the game language changes.
-cvars.AddChangeCallback("gmod_language", function() UpdateTranslations() end)
+cvars.AddChangeCallback("gmod_language", UpdateTranslations)
 
 -- Various network messages that transfer values server > client
 -- These are used to initialize certain values on the client

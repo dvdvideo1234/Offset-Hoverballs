@@ -1,0 +1,23 @@
+# Basic .gitattributes for Garry's Mod addon repo.
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted.
+*.fgd        text eol=lf
+*.json       text eol=lf
+*.lua        text eol=lf
+*.md         text eol=lf
+*.sh         text eol=lf
+*.txt        text eol=lf
+*.vmt        text eol=lf
+*.properties text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.jpg	binary
+*.mdl	binary
+*.phy	binary
+*.vtf	binary
+*.vtx	binary
+*.vvd	binary
+*.wav	binary

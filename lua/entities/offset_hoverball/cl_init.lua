@@ -90,7 +90,7 @@ end
 UpdateTranslations() -- Call once at start to get initial strings.
 
 -- Re-run UpdateTranslations() whenever the game language changes.
-cvars.AddChangeCallback("gmod_language", function() UpdateTranslations() end)
+cvars.AddChangeCallback("gmod_language", UpdateTranslations)
 
 -- Various network messages that transfer values server > client
 -- These are used to initialize certain values on the client
@@ -163,7 +163,7 @@ function ENT:DrawInfoTitle(StrT, PosX, PosY, SizX, SizY)
 	draw.DrawText(StrT, "OHBTipFont", TxtX+1, TxtY-10, color_black, TEXT_ALIGN_CENTER)
 	draw.SimpleText(StrT, "OHBTipFontGlow", TxtX, TxtY, CoHeaderPulse, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	local TW = draw.SimpleText(StrT, "OHBTipFont", TxtX, TxtY, CoOHBName, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	
+
 	return TW
 end
 
@@ -182,16 +182,16 @@ function ENT:DrawInfoContent(HBData, PosX, PosY, SizX, PadX, PadY, PadM)
 		-- Get string len from left and right side, add them together and return that so we can adjust the size of the panel.
 		local StrW1, StrH = draw.SimpleText(V[2], Font, RhbX, RowY, CoOHBName, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		LongestL = math.max(LongestL, StrW1)
-		
+
 		-- Right-side text shadow.
 		draw.DrawText(FormattedNum, Font, RhvX+1, RowY-9, color_black, TEXT_ALIGN_RIGHT)
 
 		local StrW2 = draw.SimpleText(FormattedNum, Font, RhvX, RowY, CoOHBValue, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
 		LongestR = math.max(LongestR, StrW2)
-		
+
 		-- Draw the little triangle spacers.
 		if SpacerSpacing then draw.DrawText(UISpacer, Font, SpacerSpacing, RowY-9, CoMidArrow, TEXT_ALIGN_CENTER) end
-		
+
 		RowY = RowY + (StrH + PadY)
 	end
 
@@ -209,8 +209,8 @@ function ENT:DrawLaser()
 		(OwnWeapon and OwnWeapon:IsValid() and
 		ToolMode:GetString() == gsModes and
 		OwnWeapon:GetClass() == "gmod_tool")
-	then 
-	
+	then
+
 		-- Draw the hoverball lasers
 		local hbpos = self:WorldSpaceCenter()
 		local tr = self:GetTrace(hbpos, -500)
@@ -255,13 +255,13 @@ hook.Add("HUDPaint", "OffsetHoverballs_MouseoverUI", function()
 	local PadX = 10   -- Moves text inwards, away from walls.
 	local PadY = 2    -- Spacing above/below each text line.
 	local PadM = 50   -- Space between left and right text.
-	
+
 	-- Box height, scales with 'PadY' text padding.
 	local SizeY = 140 + (PadY*2)
-	
+
 	-- Scaling multiplier for the little pointer arrow thing.
 	local SizeP = 25
-	
+
 	-- X draw coordinate for the pointy triangle.
 	local PoinX = HBPos:ToScreen().y - SizeP * 0.5
 
@@ -271,19 +271,19 @@ hook.Add("HUDPaint", "OffsetHoverballs_MouseoverUI", function()
 	-- Draw the background and little pointy arrow thing.
 	LookingAt:DrawInfoBox(BoxX, BoxY, UIContainerWidth, SizeY, !IsDrawingHeader)
 	LookingAt:DrawInfoPointy(BoxX-SizeP+1, math.Clamp(PoinX, BoxY+10, BoxY+SizeY-32), SizeP, SizeP)
-	
+
 	local WidthContent = 100
 	local WidthHeader = 100
-	
+
 	-- Draws the info rows and returns the total width of the widest one.
 	WidthContent = LookingAt:DrawInfoContent(HBData, BoxX, BoxY+17, UIContainerWidth, PadX, PadY, PadM)
-	
+
 	-- Draw header.
 	if IsDrawingHeader then
 		local Key = UILabel_Header[tonumber(HBData[1]) or 0][2]
 		WidthHeader = LookingAt:DrawInfoTitle(Key, BoxX, BoxY, UIContainerWidth, 40)
 	end
-	
+
 	-- Container width updates 1 frame behind, hopefully it shouldn't be too noticeable.
 	UIContainerWidth = math.max(WidthContent, WidthHeader) + PadM
 end)

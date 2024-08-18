@@ -327,9 +327,9 @@ if WireLib then
 
 		if name == "Set height" then
 			if type(value) == "number" then	self:SetHoverDistance(value) end
-		
+
 		elseif name == "Adjust height" then
-		
+
 			-- Smoothly adjusts height up and down like the default hotkeys.
 			-- Positive values go up, negative down, and 0 does nothing.
 			if type(value) == "number" then
@@ -350,7 +350,7 @@ if WireLib then
 
 		elseif name == "Air resistance" then
 			if type(value) == "number" then
-			
+
 				-- Update immediately unless the brakes are on, in which case it will update when they're next off.
 				self.damping = math.abs(value)
 				if self.damping_actual ~= self.brakeresistance then self.damping_actual = self.damping end
@@ -392,7 +392,7 @@ if WireLib then
 		else
 			self:UpdateHoverText()
 		end
-		
+
 		self:PhysicsUpdate()
 	end
 end
